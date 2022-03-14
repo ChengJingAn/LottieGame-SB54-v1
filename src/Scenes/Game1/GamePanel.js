@@ -3,7 +3,7 @@ import "../../stylesheets/styles.css";
 import BaseImage from '../../components/BaseImage';
 
 import { UserContext } from '../../components/BaseShot';
-import { prePathUrl, generateStandardNum } from "../../components/CommonFunctions"
+import { prePathUrl, generateStandardNum , startRepeatAudio, setRepeatAudio, stopRepeatAudio } from "../../components/CommonFunctions"
 
 let timerList = []
 //-0.5,1.25,5,-5
@@ -64,7 +64,7 @@ export default function Scene2({ finishGame, _baseGeo, stopSound }) {
     useEffect(
         () => {
 
-
+            setRepeatAudio(audioList.repeatAudio)
             isGameStarted = true;
 
             greenStar.current.style.opacity = 0
@@ -111,6 +111,7 @@ export default function Scene2({ finishGame, _baseGeo, stopSound }) {
 
     function clickFunc(num) {
 
+        stopRepeatAudio();
         if (currentNum == 0)
             stopSound();
         if (num >= currentNum) {
@@ -201,11 +202,15 @@ export default function Scene2({ finishGame, _baseGeo, stopSound }) {
                                         }, 700);
                                     }, 5000);
                                 }
+                                else{
+                                    startRepeatAudio();
+                                }
 
                             }, 2000);
 
                         }
                         else {
+                            startRepeatAudio();
                             baseRef.current.style.pointerEvents = ''
                         }
 
@@ -223,6 +228,7 @@ export default function Scene2({ finishGame, _baseGeo, stopSound }) {
 
                 showButtonAni(redStar, num)
                 greenStar.current.style.opacity = 0;
+                startRepeatAudio();
             }
         }
     }
